@@ -17,6 +17,28 @@ class Admin_Page {
 		add_action( 'admin_menu', array( $this, 'register_menu_page' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'assets' ) );
 		add_action( 'wp_ajax_epex_get_posts', array( $this, 'search_posts' ) );
+		add_action( 'wp_ajax_epex_export', array( $this, 'export_posts' ) );
+	}
+
+	/**
+	 * Export required posts
+	 *
+	 * @return void
+	 */
+	public function export_posts() {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( 'Access denied' );
+		}
+
+		$request = $_REQUEST;
+
+		unset( $request['action'] );
+
+		$exporter = new Export( $request );
+
+		$exporter->send_file();
+
 	}
 
 	/**
