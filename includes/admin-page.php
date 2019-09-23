@@ -66,7 +66,7 @@ class Admin_Page {
 			foreach ( $posts as $post ) {
 				$result[] = array(
 					'value' => (string) $post->ID,
-					'label' => $post->post_title,
+					'label' => $post->post_title . ' (' . $post->post_type . ')',
 				);
 			}
 
