@@ -12,12 +12,19 @@ if ( ! defined( 'WPINC' ) ) {
 class Export {
 
 	private $data = array();
+	private $options_to_export = array();
 
 	/**
 	 * Export data
 	 * @param array $data [description]
 	 */
 	public function __construct( $data = array() ) {
+
+		if ( ! empty( $data['options_to_export'] ) ) {
+			$this->options_to_export = explode( ',', $data['options_to_export'] );
+			unset( $data['options_to_export'] );
+		}
+
 		$this->data = $data;
 	}
 
@@ -72,6 +79,13 @@ class Export {
 				$result[ $group ][] = $this->get_post_for_export( $post_id );
 			}
 
+		}
+
+		if ( ! empty( $this->options_to_export ) ) {
+			$result['options_to_export'] = array();
+			foreach ( $this->options_to_export as $option ) {
+				$result['options_to_export'][ $option ] = get_option( $option );
+			}
 		}
 
 		return $result;

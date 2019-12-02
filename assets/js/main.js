@@ -7,6 +7,7 @@
 		data: function() {
 			return {
 				exportGroups: [],
+				exportOptions: '',
 			};
 		},
 		methods: {
@@ -22,6 +23,10 @@
 				this.exportGroups.forEach( function( group ) {
 					result[ group.name ] = group.posts.join( ',' );
 				} );
+
+				if ( this.exportOptions ) {
+					result['options_to_export'] = this.exportOptions;
+				}
 
 				return result;
 
