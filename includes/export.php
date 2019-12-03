@@ -69,14 +69,22 @@ class Export {
 
 		$result = array();
 
-		foreach ( $this->data as $group => $posts ) {
+		foreach ( $this->data as $group => $posts_string ) {
 
-			$posts = $this->get_posts_from_string( $posts );
+			$string_parts = explode( '|', $posts_string );
+			$posts        = $string_parts[0];
+			$posts        = $this->get_posts_from_string( $posts );
 
 			$result[ $group ] = array();
 
+			if ( ! empty( $string_parts[1] ) && 'undefined' !== $string_parts[1] ) {
+				$meta = explode( ',', $string_parts[1] );
+			} else {
+				$meta = array();
+			}
+
 			foreach ( $posts as $post_id ) {
-				$result[ $group ][] = $this->get_post_for_export( $post_id );
+				$result[ $group ][] = $this->get_post_for_export( $post_id, $meta );
 			}
 
 		}
@@ -105,17 +113,19 @@ class Export {
 
 	}
 
-	public function get_post_for_export( $post_id ) {
+	public function get_post_for_export( $post_id, $export_meta = array() ) {
 
-		$export_meta = array(
-			'_elementor_edit_mode',
-			'_elementor_template_type',
-			'_listing_data',
-			'_elementor_page_settings',
-			'_elementor_version',
-			'_elementor_data',
-			'_elementor_controls_usage',
-		);
+		if ( empty( $export_meta ) ) {
+			$export_meta = array(
+				'_elementor_edit_mode',
+				'_elementor_template_type',
+				'_listing_data',
+				'_elementor_page_settings',
+				'_elementor_version',
+				'_elementor_data',
+				'_elementor_controls_usage',
+			);
+		}
 
 		$export_props = array(
 			'ID',
@@ -145,7 +155,7 @@ class Export {
 			$meta = get_post_meta( $post_id, $meta_key, true );
 
 			if ( $meta ) {
-				$result['meta_input'][ $meta_key ] = $meta;
+				$result['meta_input'][ $meta_key ] = wp_unslash( $meta );
 			}
 
 		}

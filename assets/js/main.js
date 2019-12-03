@@ -21,7 +21,7 @@
 				var result = {};
 
 				this.exportGroups.forEach( function( group ) {
-					result[ group.name ] = group.posts.join( ',' );
+					result[ group.name ] = group.posts.join( ',' ) + '|' + group.meta;
 				} );
 
 				if ( this.exportOptions ) {

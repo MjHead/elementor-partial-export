@@ -3,7 +3,7 @@
  * Plugin Name: Elementor Partial Export
  * Plugin URI:  https://crocoblock.com/
  * Description: Export required parts of content created by Elementor
- * Version:     1.0.0
+ * Version:     1.1.0
  * Author:      Crocoblock
  * Author URI:  https://crocoblock.com/
  * Text Domain: elementor-partial-export
@@ -26,7 +26,7 @@ add_action( 'plugins_loaded', 'epex_init' );
  */
 function epex_init() {
 
-	define( 'EPEX_VERSION', '1.0.0' );
+	define( 'EPEX_VERSION', '1.1.0' );
 
 	define( 'EPEX__FILE__', __FILE__ );
 	define( 'EPEX_PLUGIN_BASE', plugin_basename( EPEX__FILE__ ) );

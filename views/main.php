@@ -37,6 +37,14 @@
 						:value="exportGroups[ index ].posts"
 						@input="setGroupProp( index, 'posts', $event )"
 					></cx-vui-f-select>
+					<cx-vui-textarea
+						label="Meta to export"
+						description="Comma separated meta fields list to export"
+						:wrapper-css="[ 'equalwidth' ]"
+						:size="'fullwidth'"
+						:value="exportGroups[ index ].meta"
+						@input="setGroupProp( index, 'meta', $event )"
+					></cx-vui-textarea>
 				</cx-vui-repeater-item>
 			</cx-vui-repeater>
 		</div>
